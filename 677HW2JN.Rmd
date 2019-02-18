@@ -1,0 +1,76 @@
+---
+title: "MA677 HW2"
+author: "Janhavi Nerurkar"
+date: "2/19/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(pracma)
+```
+
+1. "The shortest distance between two points is a taxi."
+```{r Question 1}
+ey1 <- (3*3/42+8*8/42+8*8/42+7*7/42+3*3/42+6*6/42+2*2/42+1*1/42+4*4/42)
+print(ey1)
+```
+
+2. \[f(x,y) = 12y^2\] for 0 <= y <= x <= 1
+  \[g(x,y) = xy\]
+  \[g(x,y)f(x,y) = xy*12y^2 = 12xy^3\]
+```{r Question 2}
+funxy2 <- function(x,y) 12*x*y^3
+exy2 <- integral2(funxy2, xmin = 0, xmax = 1, ymin = 0, ymax = 1)
+print(exy2)
+```
+
+3. \[E[(X_1-2X_2+X_3)^2] = E[(X_1-2X_2+X_3)]^2\]
+  \[                     = [E(X_1)-2E(X_2)+E(X_3)]^2\]
+```{r Question 3}
+ex4 <- (.5 - 2*.5 + .5)^2
+print(ex4)
+```
+
+4. \[f(x) = e^{-x}\]
+  \[Y = e^{.75X} = e^{.75e^{-x}}\]
+  \[g(x)f(x) = e^x * e^{.75e^{-x}} = e^{.75e^{-x} + x}\]
+```{r Question 4}
+funy4 <- function(x) exp(.75*exp(-x) + x)
+ey4 <- integrate(funy4, upper = 1, lower = 0)
+print(ey4)
+```
+
+5. \[Y = g(X) = 2X^2 + 1\]
+```{r Question 5}
+## Possible values of X: 1,2,3,4,5,6
+ey5 <- ((2*1+1) + (2*4+1) + (2*9+1) + (2*16+1) + (2*25+1) + (2*36+1))/6
+print(ey5)
+```
+
+6. \[ X = 2(1-X)\]
+  \[Y = 2X + 1 = 2*2(1-X) + 1 = 4 - 4X + 1 = 5 - 4X \]
+  \[g(x)f(x) = (5-4x)(2x+1) = 10x + 5 - 8x^2 -4x = -8x^2 + 6x + 5 \]
+```{r Question 6}
+funy6 <- function(x) -8*x*x + 6*x + 5 
+ey6 <- integrate(funy6, lower = 0, upper = 1)
+print(ey6) ##E(Y)
+ey6_2 <- 5.333333^2 ##E(Y^2) = (E(Y))^2
+print(ey6_2)
+```
+
+7. Prove: \[E[(ax + b)^n] = sum_{i=0}^{n} \binom{n}{i} a^{n-i}b^{i}E(X^{n-i})\]
+  Proof: \[E[(ax + b)^n]  = sum_{i=0}^{n}(ax+b)^i\] ##Expected value of an arbritary equation
+  \[                      = sum_{i=0}^{n} \binom{n}{i} (ax)^{n-i}b^{i}\] ##Binomial theorem
+  \[                      = sum_{i=0}^{n} \binom{n}{i} a^{n-i}b^{i}x^{n-i}\]
+  \[                      = sum_{i=0}^{n} \binom{n}{i} a^{n-i}b^{i}E[X^{n-i}]\]
+
+8. \[E(X) = np\]
+  \[E(Y) = n(1-p)\]
+  \[E(X-Y) = E(X) - E(Y)\]
+```{r Question 8}
+ex8 <- 20*.05
+ey8 <- 20*.95
+print(ex8 - ey8)
+cat("In a sample of n parts, you could expect to find 90% fewer bad parts than good parts.")
+```
